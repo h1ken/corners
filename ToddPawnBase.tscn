@@ -4,8 +4,11 @@
 [ext_resource path="res://ToddPawnBase.gd" type="Script" id=2]
 
 [node name="ToddPawnBase" type="Sprite"]
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Band" type="Sprite" parent="."]

@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="corners_till_the_end"
+config/name="Corners"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
