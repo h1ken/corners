@@ -49,3 +49,7 @@ func pawn_going_to(direction):
 	pos += direction
 
 # Functions END
+
+func _on_CenterContainer_gui_input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+		print(name)
