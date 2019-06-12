@@ -1,4 +1,4 @@
-extends TileMap
+extends PanelContainer
 
 # Consts
 
@@ -21,8 +21,8 @@ onready var Pawn = preload("res://ToddPawnBase.tscn")
 var board_size = Vector2(BOARD_WIDTH, BOARD_HEIGT)
 
 # Needed for manipulation with graphical representation of board
-var tile_size = get_cell_size()
-var tile_center = tile_size / 2
+onready var tile_size = $BoardTiles.get_cell_size()
+onready var tile_center = tile_size / 2
 
 # Variables END
 
@@ -35,9 +35,9 @@ func _ready():
 func _process(delta):
 	pass
 
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		click_handler(event)
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		mouse_handler(event)
 
 # Block of new functions
 
@@ -48,16 +48,19 @@ func init_pawns():
 			var tmp_coord = Vector2(x % PAWNS_IN_ROW, x / PAWNS_IN_ROW)
 
 			tmp_todd.wearing = tmp_todd.BAND_COLOR.BLACK_BAND
-			tmp_todd.position = map_to_world(tmp_coord) + tile_center
-			add_child(tmp_todd)
+			tmp_todd.position = $BoardTiles.map_to_world(tmp_coord) + tile_center
+			self.add_child(tmp_todd)
 			
 			tmp_coord += Vector2(1, 1)
 			tmp_todd = Pawn.instance()
 			tmp_todd.wearing = tmp_todd.BAND_COLOR.WHITE_BAND
-			tmp_todd.position = map_to_world(board_size - tmp_coord) + tile_center
-			add_child(tmp_todd)
+			tmp_todd.position = $BoardTiles.map_to_world(board_size - tmp_coord) + tile_center
+			self.add_child(tmp_todd)
 
-func click_handler(event):
-	var pos = self.world_to_map(event.position - tile_center)
-	print(pos)
+func mouse_handler(event):
+	if event.button_index == BUTTON_LEFT and event.pressed:
+		var pos = $BoardTiles.world_to_map(event.position)
+		
+		# If no chosen pawn
+		
 # Functions END
