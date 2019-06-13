@@ -5,12 +5,6 @@ enum BAND_COLOR { NONE, WHITE_BAND, BLACK_BAND }
 
 # Consts
 
-# Pawn movement
-const MOVE_UP = Vector2(0, -1)
-const MOVE_DOWN = Vector2(0, 1)
-const MOVE_LEFT = Vector2(-1, 0)
-const MOVE_RIGHT = Vector2(1, 0)
-
 # Consts END
 
 # Variables
@@ -25,7 +19,9 @@ var white_band = preload("art/white_band.png")
 # Some flags to work with
 var is_chosen = false
 var was_moved = false
-var pos = Vector2(-1, -1)
+
+# Position in grid
+var pos
 
 # Variables END
 
@@ -44,12 +40,35 @@ func _ready():
 func _process(delta):
 	pass
 
+func _on_CenterContainer_gui_input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+		if global.current_player_turn == self.wearing:
+			if self.is_chosen:
+				unchoose_self()
+				if self.was_moved:
+					end_turn()
+			else:
+				choose_self()
+
 # Pawn functions
 func pawn_going_to(direction):
 	pos += direction
 
-# Functions END
+func choose_self():
+	if global.selected_pawn_name != "-":
+		global.emit_signal("chosed_another_pawn")
+	self.is_chosen = true
+	global.selected_pawn_name = self.name
+	global.selected_pawn_pos = pos
 
-func _on_CenterContainer_gui_input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		print(name)
+func unchoose_self():
+	self.is_chosen = false
+	global.selected_pawn_name = "-"
+	global.selected_pawn_pos = Vector2(-1, -1)
+
+func end_turn():
+	self.was_moved = false
+	global.turn_number += 1
+	global.current_player_turn = 3 - global.current_player_turn
+
+# Functions END

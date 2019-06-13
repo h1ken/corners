@@ -11,7 +11,7 @@ script = ExtResource( 2 )
 [node name="Band" type="Sprite" parent="."]
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-margin_left = -552.0
+margin_left = -515.0
 margin_top = -722.0
 margin_right = 620.0
 margin_bottom = 721.0
