@@ -37,9 +37,12 @@ func _ready():
 		$Band.flip_h = true
 		flip_h = true
 
+func _on_new_game():
+	self.queue_free()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+#func _process(delta):
+#	pass
 
 func _on_CenterContainer_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
@@ -56,12 +59,14 @@ func choose_self():
 	if global.selected_pawn_name != "-":
 		get_parent().pawn_retreat(global.selected_pawn_name)
 	self.is_chosen = true
+	self.material.set_shader_param("anime", 3.0)
 	global.selected_pawn_name = self.name
 	global.selected_pawn_pos = pos
 
 func unchoose_self():
 	self.is_chosen = false
 	global.selected_pawn_name = "-"
+	self.material.set_shader_param("anime", 0.0)
 	global.selected_pawn_pos = Vector2(-1, -1)
 
 func end_turn():
@@ -69,9 +74,9 @@ func end_turn():
 	
 	self.was_moved = false
 	self.jumped = false
-	global.turn_number += 1
 	global.grid[self.pos.x][self.pos.y] = self.wearing
 	global.grid[previous_pos.x][previous_pos.y] = BAND_COLOR.NONE
+	global.turn_number += 1
 	global.current_player_turn = 3 - global.current_player_turn
-
+	
 # Functions END
