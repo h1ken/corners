@@ -1,7 +1,5 @@
 extends Node
 
-signal chosed_another_pawn
-
 # Game state variables
 var current_player_turn
 var turn_number

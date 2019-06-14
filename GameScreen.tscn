@@ -27,7 +27,7 @@
 1/z_index = 0
 
 [sub_resource type="TileSet" id=2]
-0/name = "Arrow.png 0"
+0/name = "Arrow"
 0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
